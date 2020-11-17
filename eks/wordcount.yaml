@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-new-submitter
+spec:
+  template:
+    spec:
+      containers:
+      - name: wordcount
+        image: flink:1.8.2
+        args:
+        - /opt/flink/bin/flink
+        - run
+        - -m
+        - flinksessioncluster-sample-jobmanager:8081
+        - /opt/flink/examples/batch/WordCount.jar
+        - --input
+        - /opt/flink/README.txt
+      restartPolicy: Never
